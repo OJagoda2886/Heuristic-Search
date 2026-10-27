@@ -11,6 +11,19 @@ class Puzzle:
                 if board[row][column] == number:
                     return row, column
 
+    def is_solvable(self, board=None):
+        """Check solvability using inversion parity for the 3x3 goal order."""
+        board = self.start if board is None else board
+        numbers = [number for row in board for number in row if number != 0]
+        inversions = 0
+
+        for i in range(len(numbers)):
+            for j in range(i + 1, len(numbers)):
+                if numbers[i] > numbers[j]:
+                    inversions += 1
+
+        return inversions % 2 == 0
+
     def hamming_distance(self, board):
         distance = 0
 

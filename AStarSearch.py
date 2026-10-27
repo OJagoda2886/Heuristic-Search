@@ -8,6 +8,10 @@ class AStarSearch:
         self.puzzle = puzzle
 
     def search(self, start, heuristic_name="manhattan"):
+        # Reject impossible boards before constructing or expanding the search.
+        if not self.puzzle.is_solvable(start):
+            return None, 0
+
         # Tuples are immutable, so boards can be used as dictionary keys.
         start = tuple(tuple(row) for row in start)
         goal = tuple(tuple(row) for row in self.puzzle.goal)
